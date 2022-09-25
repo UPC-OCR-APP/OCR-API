@@ -54,8 +54,10 @@ def getConsulta(numero_historia):
     return Response(response, mimetype='application/json')
 
 
-@CONSULTATIOS.route('/consulta/<date>', methods=['GET'])
-def getConsultaByDate(date):
-    users = myclient.ocrapp.consulta.find({"fecha_atencion": date})
+@CONSULTATIOS.route('/consulta/date/', methods=['GET'])
+def getConsultaByDate():
+
+    fecha_atencion = request.json['fecha_atencion']
+    users = myclient.ocrapp.consulta.find({"fecha_atencion": fecha_atencion})
     response = json_util.dumps(users)
     return Response(response, mimetype='application/json')
