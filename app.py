@@ -5,6 +5,7 @@ from controllers.consultation_controller import CONSULTATIOS
 from controllers.history_controller import STORIES
 from azure.ai.formrecognizer import DocumentAnalysisClient
 from azure.core.credentials import AzureKeyCredential
+from flask import request, Response
 from PIL import Image, ImageOps
 
 app = flask.Flask(__name__)
@@ -181,6 +182,15 @@ def pruebas():
         'Atendido_Por': diccionario["Atendido_Por"],
         'Observaciones': diccionario["Observaciones"]
     }
+
+
+@app.route("/image", methods=['GET', 'POST'])
+def image():
+    if (request.method == "POST"):
+        bytesOfImage = request.get_data()
+        with open(pathfinal, 'wb') as out:
+            out.write(bytesOfImage)
+        return "Image read"
 
 
 app.register_blueprint(USERS)
