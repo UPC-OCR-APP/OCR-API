@@ -54,7 +54,7 @@ def getConsulta(numero_historia):
     return Response(response, mimetype='application/json')
 
 
-@CONSULTATIOS.route('/consulta/date/', methods=['GET'])
+@CONSULTATIOS.route('/consulta/date/', methods=['POST'])
 def getConsultaByDate():
 
     fecha_atencion = request.json['fecha_atencion']
