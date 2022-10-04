@@ -24,7 +24,7 @@ key = "c33dd42ea5a84541b2d1ff04bd82c314"
 @app.route('/')
 def index():
     print(pathfinal)
-    return {"message": "Probando api"}
+    return {"message para ti": "Deja de llorar, sonrie la vida es bella"}
 
 
 @app.route("/consulta")
