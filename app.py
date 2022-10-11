@@ -66,7 +66,7 @@ def pruebas():
     diccionario["Atendido_Por"] = ""
     diccionario["Observaciones"] = ""
 
-    with open(filepath, "rb") as fd:
+    with open("image.jpeg", "rb") as fd:
         invoice = fd.read()
 
         document_analysis_client = DocumentAnalysisClient(
@@ -193,7 +193,7 @@ def pruebas():
 def image():
     if (request.method == "POST"):
         bytesOfImage = request.get_data()
-        with open(filepath, 'wb') as out:
+        with open('image.jpeg', 'wb') as out:
             out.write(bytesOfImage)
         return "Image read"
 
