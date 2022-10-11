@@ -8,7 +8,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 USERS = flask.Blueprint('users', __name__)
 
 
-myclient = pymongo.MongoClient("mongodb://3ce4e613-0ee0-4-231-b9ee:qfDSkSADTncQVX9L0T4910t4uhxe7QJpPaJCcWcNr5SYqB1EzXOZDPQz34bTXNCrdVcZ1X9ga6M4tRyepsRP7g==@3ce4e613-0ee0-4-231-b9ee.mongo.cosmos.azure.com:10255/?ssl=true&replicaSet=globaldb&retrywrites=false&maxIdleTimeMS=120000&appName=@3ce4e613-0ee0-4-231-b9ee@")
+myclient = pymongo.MongoClient("mongodb://0e81c666-0ee0-4-231-b9ee:7wa0ASyepN4ta4Ty4DxZWZ11b79PWGXHgXfXZQXIlNb54k1ZvXgvEJ8rACxGY7jsC21r8rGyd1TlD6xcrZLO2w==@0e81c666-0ee0-4-231-b9ee.mongo.cosmos.azure.com:10255/?ssl=true&replicaSet=globaldb&retrywrites=false&maxIdleTimeMS=120000&appName=@0e81c666-0ee0-4-231-b9ee@")
 
 
 @USERS.route('/users', methods=['GET'])
