@@ -10,12 +10,12 @@ from PIL import Image, ImageOps
 
 app = flask.Flask(__name__)
 
-valor = '/image.jpeg'
-path = os.path.dirname(os.path.abspath(__file__)).replace('\\', '/')
-pathfinal = path + valor
-picture = Image.open(pathfinal)
-picture = ImageOps.exif_transpose(picture)
-picture.save('image.jpeg', 'JPEG', optimize=True, quality=50)
+#valor = '/image.jpeg'
+#path = os.path.dirname(os.path.abspath(__file__)).replace('\\', '/')
+#pathfinal = path + valor
+#picture = Image.open(pathfinal)
+#picture = ImageOps.exif_transpose(picture)
+#picture.save('image.jpeg', 'JPEG', optimize=True, quality=50)
 
 endpoint = "https://ocr-app-ocr-app.cognitiveservices.azure.com/"
 key = "c33dd42ea5a84541b2d1ff04bd82c314"
@@ -23,12 +23,17 @@ key = "c33dd42ea5a84541b2d1ff04bd82c314"
 
 @app.route('/')
 def index():
-    print(pathfinal)
+    #print(pathfinal)
     return {"message para ti": "Deja de llorar, sonrie la vida es bella"}
 
 
 @app.route("/consulta")
 def pruebas():
+
+    filepath='image.jpeg'
+    picture=Image.open(filepath)
+    picture=ImageOps.exif_transpose(picture)
+    picture.save('image.jpeg','JPEG',optimize=True,quality=50)
 
     ultima_cadena = ""
     cadena_vacía = ""
