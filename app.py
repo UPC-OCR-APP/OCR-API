@@ -19,7 +19,7 @@ app = flask.Flask(__name__)
 
 endpoint = "https://ocr-app-ocr-app.cognitiveservices.azure.com/"
 key = "c33dd42ea5a84541b2d1ff04bd82c314"
-
+filepath='image.jpeg'
 
 @app.route('/')
 def index():
@@ -66,7 +66,7 @@ def pruebas():
     diccionario["Atendido_Por"] = ""
     diccionario["Observaciones"] = ""
 
-    with open(pathfinal, "rb") as fd:
+    with open(filepath, "rb") as fd:
         invoice = fd.read()
 
         document_analysis_client = DocumentAnalysisClient(
@@ -193,7 +193,7 @@ def pruebas():
 def image():
     if (request.method == "POST"):
         bytesOfImage = request.get_data()
-        with open(pathfinal, 'wb') as out:
+        with open(filepath, 'wb') as out:
             out.write(bytesOfImage)
         return "Image read"
 
