@@ -1,5 +1,8 @@
 import os
 import flask
+import pprint
+
+from bson import json_util
 from controllers.user_controller import USERS
 from controllers.consultation_controller import CONSULTATIOS
 from controllers.history_controller import STORIES
@@ -8,6 +11,10 @@ from azure.core.credentials import AzureKeyCredential
 from flask import request, Response
 from PIL import Image, ImageOps
 
+#from pydrive2.auth import GoogleAuth
+#
+#gauth= GoogleAuth()
+#gauth.LocalWebserverAuth()
 app = flask.Flask(__name__)
 
 #valor = '/image.jpeg'
@@ -19,7 +26,7 @@ app = flask.Flask(__name__)
 
 endpoint = "https://ocr-app-ocr-app.cognitiveservices.azure.com/"
 key = "c33dd42ea5a84541b2d1ff04bd82c314"
-filepath='image.jpeg'
+
 
 @app.route('/')
 def index():
@@ -75,47 +82,48 @@ def pruebas():
             "prebuilt-document", invoice)
         result = poller.result()
         for kv_pair in result.key_value_pairs:
-            if kv_pair.key.content == "FECHA:":
-                diccionario["Fec_Atencion"] = kv_pair.value.content
-            if kv_pair.key.content == "HORA:":
-                diccionario["Hora"] = kv_pair.value.content
-            if kv_pair.key.content == "EDAD:":
-                diccionario["Edad"] = kv_pair.value.content
-            if kv_pair.key.content == "Motivo de consulta:":
-                diccionario["Motivo"] = kv_pair.value.content
-            if kv_pair.key.content == "Tiempo de enfermedad:":
-                diccionario["Tipo_Enf"] = kv_pair.value.content
-            if kv_pair.key.content == "Apetito:":
-                diccionario["Apetito"] = kv_pair.value.content
-            if kv_pair.key.content == "Sed:":
-                diccionario["Sed"] = kv_pair.value.content
-            if kv_pair.key.content == "Sue":
-                diccionario["Suenio"] = kv_pair.value.content
-            if kv_pair.key.content == "Orina:":
-                diccionario["Orina"] = kv_pair.value.content
-            if kv_pair.key.content == "Ex. Fisico:" or kv_pair.key.content.startswith("Ex"):
-                diccionario["Ex_Fisico"] = kv_pair.value.content
-            if kv_pair.key.content == "FC:":
-                diccionario["Fc"] = kv_pair.value.content
-            if kv_pair.key.content == "FR:":
-                diccionario["Fr"] = kv_pair.value.content
-            if kv_pair.key.content == "Peso:":
-                diccionario["Peso"] = kv_pair.value.content
-            if kv_pair.key.content == "Talla:":
-                diccionario["Talla"] = kv_pair.value.content
-            if kv_pair.key.content == "IMC:":
-                diccionario["Imc"] = kv_pair.value.content
-            if kv_pair.key.content == "Exámenes auxiliares:":
-                diccionario["Examenes_Auxiliares"] = kv_pair.value.content
-            # if kv_pair.key.content == "Referencia (lugar y motivo):" or kv_pair.key.content.startswith("Referen"):
-            #        diccionario["Referencia"] = kv_pair.value.content
-            if kv_pair.key.content == "Atendido por:" or kv_pair.key.content.startswith("Atendido"):
-                diccionario["Atendido_Por"] = kv_pair.value.content
-            if kv_pair.key.content == "Próxima cita:":
-                diccionario["Proxima_Cita"] = kv_pair.value.content
-            if kv_pair.key.content == "Estado de ánimo:":
-                diccionario["Estado_Animo"] = kv_pair.value.content
-
+            if kv_pair.key and kv_pair.value:
+                if kv_pair.key.content == "FECHA:":
+                    diccionario["Fec_Atencion"] = kv_pair.value.content
+                if kv_pair.key.content == "HORA:":
+                    diccionario["Hora"] = kv_pair.value.content
+                if kv_pair.key.content == "EDAD:":
+                    diccionario["Edad"] = kv_pair.value.content
+                if kv_pair.key.content == "Motivo de consulta:":
+                    diccionario["Motivo"] = kv_pair.value.content
+                if kv_pair.key.content == "Tiempo de enfermedad:":
+                    diccionario["Tipo_Enf"] = kv_pair.value.content
+                if kv_pair.key.content == "Apetito:":
+                    diccionario["Apetito"] = kv_pair.value.content
+                if kv_pair.key.content == "Sed:":
+                    diccionario["Sed"] = kv_pair.value.content
+                if kv_pair.key.content == "Sue":
+                    diccionario["Suenio"] = kv_pair.value.content
+                if kv_pair.key.content == "Orina:":
+                    diccionario["Orina"] = kv_pair.value.content
+                if kv_pair.key.content == "Ex. Fisico:" or kv_pair.key.content.startswith("Ex"):
+                    diccionario["Ex_Fisico"] = kv_pair.value.content
+                if kv_pair.key.content == "FC:":
+                    diccionario["Fc"] = kv_pair.value.content
+                if kv_pair.key.content == "FR:":
+                    diccionario["Fr"] = kv_pair.value.content
+                if kv_pair.key.content == "Peso:":
+                    diccionario["Peso"] = kv_pair.value.content
+                if kv_pair.key.content == "Talla:":
+                    diccionario["Talla"] = kv_pair.value.content
+                if kv_pair.key.content == "IMC:":
+                    diccionario["Imc"] = kv_pair.value.content
+                if kv_pair.key.content == "Exámenes auxiliares:":
+                    diccionario["Examenes_Auxiliares"] = kv_pair.value.content
+                # if kv_pair.key.content == "Referencia (lugar y motivo):" or kv_pair.key.content.startswith("Referen"):
+                #        diccionario["Referencia"] = kv_pair.value.content
+                if kv_pair.key.content == "Atendido por:" or kv_pair.key.content.startswith("Atendido"):
+                    diccionario["Atendido_Por"] = kv_pair.value.content
+                if kv_pair.key.content == "Próxima cita:":
+                    diccionario["Proxima_Cita"] = kv_pair.value.content
+                if kv_pair.key.content == "Estado de ánimo:":
+                    diccionario["Estado_Animo"] = kv_pair.value.content
+        
         for style in result.styles:
             if style.is_handwritten:
                 for span in style.spans:
@@ -187,6 +195,10 @@ def pruebas():
         'Atendido_Por': diccionario["Atendido_Por"],
         'Observaciones': diccionario["Observaciones"]
     }
+@app.route("/resultado", methods=['GET'])
+def getResultado():
+    response = json_util.dumps(pruebas())
+    return Response(response, mimetype='application/json')
 
 
 @app.route("/image", methods=['GET', 'POST'])
@@ -202,4 +214,4 @@ app.register_blueprint(USERS)
 app.register_blueprint(CONSULTATIOS)
 app.register_blueprint(STORIES)
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True)#, port=8000, host='192.168.0.25')
