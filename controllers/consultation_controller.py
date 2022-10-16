@@ -6,7 +6,7 @@ import pymongo
 
 CONSULTATIOS = flask.Blueprint('consultations', __name__)
 
-myclient = pymongo.MongoClient("mongodb://0e81c666-0ee0-4-231-b9ee:7wa0ASyepN4ta4Ty4DxZWZ11b79PWGXHgXfXZQXIlNb54k1ZvXgvEJ8rACxGY7jsC21r8rGyd1TlD6xcrZLO2w==@0e81c666-0ee0-4-231-b9ee.mongo.cosmos.azure.com:10255/?ssl=true&replicaSet=globaldb&retrywrites=false&maxIdleTimeMS=120000&appName=@0e81c666-0ee0-4-231-b9ee@")
+myclient = pymongo.MongoClient("mongodb://47b2f418-0ee0-4-231-b9ee:o1CU4gIcHj4GeC3CUOFkewxuLyeCY5fI2XL6gSY7wlcCOi69aHmU2v0iptlpDFrEjgJOFRqgSzoee1MPnvBQFA==@47b2f418-0ee0-4-231-b9ee.mongo.cosmos.azure.com:10255/?ssl=true&replicaSet=globaldb&retrywrites=false&maxIdleTimeMS=120000&appName=@47b2f418-0ee0-4-231-b9ee@")
 
 
 @CONSULTATIOS.route('/consulta', methods=['POST'])
