@@ -53,11 +53,11 @@ def getConsulta(numero_historia):
     response = json_util.dumps(users)
     return Response(response, mimetype='application/json')
 
-@CONSULTATIOS.route('/consulta/last/<quantity>', methods=['GET'])
-def getConsulta(quantity):
-    users = myclient.ocrapp.consulta.find({}).sort({"fecha_atencion":-1}).limit(quantity)
-    response = json_util.dumps(users)
-    return Response(response, mimetype='application/json')
+#@CONSULTATIOS.route('/consulta/last/<quantity>', methods=['GET'])
+#def getConsulta(quantity):
+#    users = myclient.ocrapp.consulta.find({}).sort({"fecha_atencion":-1}).limit(quantity)
+#    response = json_util.dumps(users)
+#    return Response(response, mimetype='application/json')
 
 @CONSULTATIOS.route('/consulta/date/', methods=['POST'])
 def getConsultaByDate():
