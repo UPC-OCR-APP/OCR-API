@@ -6,7 +6,8 @@ import pymongo
 
 CONSULTATIOS = flask.Blueprint('consultations', __name__)
 
-myclient = pymongo.MongoClient("mongodb://0e81c666-0ee0-4-231-b9ee:7wa0ASyepN4ta4Ty4DxZWZ11b79PWGXHgXfXZQXIlNb54k1ZvXgvEJ8rACxGY7jsC21r8rGyd1TlD6xcrZLO2w==@0e81c666-0ee0-4-231-b9ee.mongo.cosmos.azure.com:10255/?ssl=true&replicaSet=globaldb&retrywrites=false&maxIdleTimeMS=120000&appName=@0e81c666-0ee0-4-231-b9ee@")
+myclient = pymongo.MongoClient(
+    "mongodb://ocr-app:YTJVfr3w4SEFNPrOj461mwGdUJrMv4MYFsOSIUk4SA32YxBYekHdjaelHhOQBMnStmbSAs28SmJ56A4kW7NyqA==@ocr-app.mongo.cosmos.azure.com:10255/?ssl=true&retrywrites=false&replicaSet=globaldb&maxIdleTimeMS=120000&appName=@ocr-app@")
 
 
 @CONSULTATIOS.route('/consulta', methods=['POST'])
@@ -53,16 +54,21 @@ def getConsulta(numero_historia):
     response = json_util.dumps(users)
     return Response(response, mimetype='application/json')
 
-@CONSULTATIOS.route('/consulta/last/<quantity>', methods=['GET'])
-def getConsulta(quantity):
-    users = myclient.ocrapp.consulta.find({}).sort({"fecha_atencion":-1}).limit(quantity)
-    response = json_util.dumps(users)
+
+@CONSULTATIOS.route('/consulta/last/<numero_historia>', methods=['GET'])
+def getConsultaByQuantity(numero_historia):
+    myclient.ocrapp.consulta.create_index("fecha_atencion")
+    consultas = myclient.ocrapp.consulta.find({"numero_historia": numero_historia}).limit(3).sort(
+        'fecha_atencion', pymongo.DESCENDING)
+    response = json_util.dumps(consultas)
     return Response(response, mimetype='application/json')
+
 
 @CONSULTATIOS.route('/consulta/date/', methods=['POST'])
 def getConsultaByDate():
-
     fecha_atencion = request.json['fecha_atencion']
-    users = myclient.ocrapp.consulta.find({"fecha_atencion": fecha_atencion})
+    numero_historia = request.json['numero_historia']
+    users = myclient.ocrapp.consulta.find(
+        {"fecha_atencion": fecha_atencion, "numero_historia": numero_historia})
     response = json_util.dumps(users)
     return Response(response, mimetype='application/json')

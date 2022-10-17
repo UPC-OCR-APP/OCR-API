@@ -5,7 +5,7 @@ import pymongo
 
 STORIES = flask.Blueprint('stories', __name__)
 
-myclient = pymongo.MongoClient("mongodb://0e81c666-0ee0-4-231-b9ee:7wa0ASyepN4ta4Ty4DxZWZ11b79PWGXHgXfXZQXIlNb54k1ZvXgvEJ8rACxGY7jsC21r8rGyd1TlD6xcrZLO2w==@0e81c666-0ee0-4-231-b9ee.mongo.cosmos.azure.com:10255/?ssl=true&replicaSet=globaldb&retrywrites=false&maxIdleTimeMS=120000&appName=@0e81c666-0ee0-4-231-b9ee@")
+myclient = pymongo.MongoClient("mongodb://ocr-app:YTJVfr3w4SEFNPrOj461mwGdUJrMv4MYFsOSIUk4SA32YxBYekHdjaelHhOQBMnStmbSAs28SmJ56A4kW7NyqA==@ocr-app.mongo.cosmos.azure.com:10255/?ssl=true&retrywrites=false&replicaSet=globaldb&maxIdleTimeMS=120000&appName=@ocr-app@")
 
 
 @STORIES.route('/history', methods=['POST'])
